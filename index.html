@@ -5,6 +5,8 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eskimo</title>
+
+    <!-- New CSS -->
     <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css" />
     <link
       rel="stylesheet"
@@ -15,16 +17,22 @@
     <header>
       <h1>Eskimo</h1>
       <p>
-        get image based on dog breed.uses the
-        <a href="https://dog.ceo/api">Dog Api</a>
+        Get dog image based on dog breed. Uses the
+        <a href="https://dog.ceo/dog-api/" target="_blank">Dog API</a>
       </p>
     </header>
+
     <main>
-      <select name="" id=""><option value="disabled"></option>
-      <option value=""></option>
-      <option value=""></option></select>
+    <label for="data-breed-list">Select breed</label>
+      <select name="" id="data-breed-list">
+        <option value="">Select Dog</option>
+      </select>
+
+      <br />
+
+      <img src="https://placehold.co/300" alt="Placeholder image" />
     </main>
-    <div id="app"></div>
-    <script type="module" src="main.js"></script>
+
+    <script type="module" src="src/js/main.js"></script>
   </body>
 </html>
