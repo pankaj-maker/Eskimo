@@ -1,35 +1,79 @@
-// https://dog.ceo/api/breed/affenpinscher/images/random
-// https://dog.ceo/api/breeds/list/all
 import Option from "./components/Option";
+// https://dog.ceo/api/breeds/list/all
+// https://dog.ceo/api/breed/affenpinscher/images/random
+
+//  dom targeting
 const BASE_URL = `https://dog.ceo/api/`;
-const imageEl = document.querySelector("img");
-const breedListEl = document.querySelector("#data-breed-list");
+const imgEl = document.querySelector("img");
+const dataBreedList = document.querySelector("#data-breed-list");
 
-function getDogsList() {
-  return fetch(`${BASE_URL}breeds/list/all`)
-    .then((res) => res.json())
-    .then((data) => data.message)
-    .catch((err) => console.error(err));
+//  async function getData(){
+//     const res=await fetch(`https://dog.ceo/api/breed/affenpinscher/images/random`);
+//     const data=await res.json();
+//     console.log(data.message);
+//     imgEl.src=data.message;
+// }
+// getData();
+
+// MARK: fetch
+async function getDogsList() {
+  try {
+    const res = await fetch(`${BASE_URL}breeds/list/all`);
+    const data = await res.json();
+    return data.message;
+  } catch (err) {
+    console.error("Error Occured");
+  }
+  //    return fetch(`${BASE_URL}breeds/list/all`)
+  //     .then((res) => res.json())
+  //     .then((data) =>data.message)
+  //     .catch((err) => console.error("error", err))
+  //     ;
 }
-getDogsList();
+//
+async function getDogsImg(breed) {
+  try {
+    const res = await fetch(`${BASE_URL}breed/${breed}/images/random`);
+    const data = await res.json();
+    return data.message;
+  } catch (err) {
+    console.error("Error Occured");
+  }
 
-function getDogImage() {
-  fetch (`${BASE_URL}breed`)
+  //   return fetch(`${BASE_URL}breed/${breed}/images/random`)
+  //     .then((res) => res.json())
+  //     .then((data) => data.message);
 }
 
-function renderSelect() {
-  getDogsList().then((breedList) => {
-    for (let breed in breedList) {
-      const option = document.createElement("option");
-        option.textContent =breed;
-        breedListEl.appendChild(Option(breed))
-    }
+async function renderSelect() {
+  const dogList = await getDogsList();
+  Object.keys(dogList).forEach((dogName) => {
+    dataBreedList.appendChild(Option(dogName));
   });
-//   const option = document.createElement("option");
-//   option.textContent = "some data";
-//   option.value = "some value";
-//   breedLi.appendChild(option);
+  //   getDogsList().then((breedList) => {
+  //     for (let breed in breedList) {
+  //       dataBreedList.appendChild(Option(breed));
+  //     }
 }
+
+// const option=document.createElement("option")
+// option.textContent="some data"
+// option.value="some value"
+// dataBreedList.appendChild(option);
 renderSelect();
 
-function renderImage() {}
+async function renderImage(breed) {
+imgEl.src=`gify.gif`
+  const dogImg = await getDogsImg(breed);
+  imgEl.src = dogImg;
+  //   getDogsImg(breed).then((data) => {
+  //     imgEl.src = data;
+  //   });
+}
+renderImage("boxer");
+
+
+dataBreedList.addEventListener("change", async(e) => {
+  const currValue=e.target.value;
+  renderImage(currValue);
+});
